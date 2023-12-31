@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Route::get('/tasks', function () {
     return view("tasksList", [
-        "tasks" => Task::latest()->paginate(6)
+        "tasks" => Task::latest()->simplePaginate(6)
     ]);
 })->name("tasks.showAll");
 
@@ -54,7 +54,7 @@ Route::put("/tasks/{task}", function (Task $task, TaskRequest $request) {
     // $task->description = $data['description'];
     // $task->save();
 
-    return redirect()->route("tasks.show", ["task" => $task->id])->with("success", "Task Updated successfully!");
+    return redirect()->route("tasks.show", ["task" => $task])->with("success", "Task Updated successfully!");
 })->name("tasks.update");
 
 Route::delete("tasks/{task}", function (Task $task) {
@@ -62,3 +62,9 @@ Route::delete("tasks/{task}", function (Task $task) {
 
     return redirect()->route('tasks.showAll')->with("success", "Task Deleted successfully!");
 })->name("tasks.destroy");
+
+Route::put("tasks/{task}/toggle", function (Task $task) {
+    $task->toggle();
+
+    return redirect()->back();
+})->name("tasks.toggle-completed");

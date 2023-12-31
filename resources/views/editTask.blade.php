@@ -3,7 +3,7 @@
 @section('content')
     <h1>Edit task {{ $task->id }}</h1>
 
-    <form action="{{ route('tasks.update', ['task' => $task->id]) }}" method="post">
+    <form action="{{ route('tasks.update', ['task' => $task]) }}" method="post">
         @csrf
         @method('PUT')
         <div>
