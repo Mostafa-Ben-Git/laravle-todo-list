@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Requests\TaskRequest;
-use App\Models\Task;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,51 +18,18 @@ Route::get('/', function () {
     return redirect()->route("tasks.showAll");
 });
 
-Route::get('/tasks', function () {
-    return view("tasksList", [
-        "tasks" => Task::latest()->simplePaginate(5)
-    ]);
-})->name("tasks.showAll");
+Route::get('/tasks', [TaskController::class, "index"])->name("tasks.showAll");
 
 Route::view("/tasks/add", "addNewTask")->name("tasks.add");
 
-Route::get("/tasks/{task}", function (Task $task) {
-    return view("taskInfo")->with("task", $task);
-})->name("tasks.show");
+Route::get("/tasks/{task}", [TaskController::class, "show"])->name("tasks.show");
 
-Route::get("/tasks/{task}/edit", function (Task $task) {
-    return view('editTask')->with("task", $task);
-})->name("tasks.edit");
+Route::get("/tasks/{task}/edit", [TaskController::class, "edit"])->name("tasks.edit");
 
-Route::post("/tasks", function (TaskRequest $request) {
-    $data = $request->validated();
-    // $task->title = $data['title'];
-    // $task->description = $data['description'];
-    // $task->save();
-    $task = Task::create($data);
+Route::post("/tasks", [TaskController::class, "store"])->name("tasks.store");
 
-    return redirect()->route("tasks.show", ["task" => $task->id])->with("success", "Task created successfully!");
-})->name("tasks.store");
+Route::put("/tasks/{task}", [TaskController::class, "update"])->name("tasks.update");
 
-Route::put("/tasks/{task}", function (Task $task, TaskRequest $request) {
-    $data = $request->validated();
+Route::delete("tasks/{task}", [TaskController::class, "destroy"])->name("tasks.destroy");
 
-    $task->update($data);
-    // $task->title = $data['title'];
-    // $task->description = $data['description'];
-    // $task->save();
-
-    return redirect()->route("tasks.show", ["task" => $task])->with("success", "Task Updated successfully!");
-})->name("tasks.update");
-
-Route::delete("tasks/{task}", function (Task $task) {
-    $task->delete();
-
-    return redirect()->route('tasks.showAll')->with("success", "Task Deleted successfully!");
-})->name("tasks.destroy");
-
-Route::put("tasks/{task}/toggle", function (Task $task) {
-    $task->toggle();
-
-    return redirect()->back();
-})->name("tasks.toggle-completed");
+Route::put("tasks/{task}/toggle", [TaskController::class, "edit_completed"])->name("tasks.toggle-completed");
