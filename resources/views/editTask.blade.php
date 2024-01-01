@@ -1,27 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Edit task {{ $task->id }}</h1>
+    <h1> 🔁 Edit task {{ $task->id }}</h1>
 
-    <form action="{{ route('tasks.update', ['task' => $task]) }}" method="post">
+    <form action="{{ route('tasks.update', ['task' => $task]) }}" method="post" class="bg-secondary p-5 rounded">
         @csrf
         @method('PUT')
-        <div>
-            <label for="title">Title:</label>
-            <input type="text" name="title" id="title" value="{{ $task->title ?? old('title') }}">
+        <div class="my-3">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" class="form-control" name="title" id="title" value="{{ $task->title }}">
             @error('title')
-                <p>{{ $message }}</p>
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
-        <div>
-            <label for="description">description:</label>
-            <input type="text" name="description" value="{{ $task->description ?? old('description') }}" id="description">
+        <div class="my-3">
+            <label for="description" class="form-label">description:</label>
+            <textarea type="text" class="form-control" name="description" id="description">{{ $task->description }}</textarea>
             @error('description')
-                <p>{{ $message }}</p>
+                <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
         <div>
-            <button type="submit">Update Task</button>
+            <button type="submit" class="btn btn-warning">Update Task</button>
         </div>
     </form>
 @stop

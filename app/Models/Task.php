@@ -9,7 +9,7 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $filable = ["title", "description"];
+    protected $fillable = ["title", "description"];
 
     public function toggle()
     {

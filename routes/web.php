@@ -22,11 +22,11 @@ Route::get('/', function () {
 
 Route::get('/tasks', function () {
     return view("tasksList", [
-        "tasks" => Task::latest()->simplePaginate(6)
+        "tasks" => Task::latest()->simplePaginate(5)
     ]);
 })->name("tasks.showAll");
 
-Route::view("/tasks/add", "addNewTask");
+Route::view("/tasks/add", "addNewTask")->name("tasks.add");
 
 Route::get("/tasks/{task}", function (Task $task) {
     return view("taskInfo")->with("task", $task);
@@ -41,7 +41,7 @@ Route::post("/tasks", function (TaskRequest $request) {
     // $task->title = $data['title'];
     // $task->description = $data['description'];
     // $task->save();
-    $task = Task::ceate($data);
+    $task = Task::create($data);
 
     return redirect()->route("tasks.show", ["task" => $task->id])->with("success", "Task created successfully!");
 })->name("tasks.store");
