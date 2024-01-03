@@ -3,7 +3,7 @@
 @section('content')
     <span class="d-flex align-items-center justify-content-between">
         <h1>The List of Tasks</h1>
-        <a class="btn btn-primary" href="{{ route('tasks.add') }}">Add Task</a>
+        <a class="btn btn-primary" href="{{ route('tasks.create') }}">Add Task</a>
     </span>
     @if (session()->has('success'))
         <p class="alert alert-success" role="alert">{{ session('success') }}</p>

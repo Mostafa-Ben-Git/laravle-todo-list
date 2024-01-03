@@ -22,7 +22,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('addNewTask');
     }
 
     /**
@@ -64,6 +64,7 @@ class TaskController extends Controller
         $data = $request->validated();
 
         $task->update($data);
+
         // $task->title = $data['title'];
         // $task->description = $data['description'];
         // $task->save();

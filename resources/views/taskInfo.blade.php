@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class='text-center'>Task {{ $task->id }} <br> ⬇️ <br> {{ $task->title }}</h1>
-    <h2 class='text-center'>{{ $task->completed ? 'Task Completed ✅ !' : 'Task Uncompleted ⏳ !' }}</h2>
+    <h1 class="text-center my-4">Task {{ $task->id }} ➡️ {{ $task->title }}</h1>
     <div class="p-4 bg-info w-75 mx-auto rounded">
+        <h2 class='text-center'>{{ $task->completed ? 'Task Completed ✅ !' : 'Task Uncompleted ⏳ !' }}</h2>
         @if (session()->has('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endisset
